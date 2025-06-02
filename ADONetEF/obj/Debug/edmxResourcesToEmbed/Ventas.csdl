@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BDVentasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TBoleta">
+    <Key>
+      <PropertyRef Name="NroBoleta" />
+    </Key>
+    <Property Name="NroBoleta" Type="Int32" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Precision="0" />
+    <Property Name="CodCliente" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Name="CodVendedor" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+    <Property Name="Anulado" Type="Boolean" />
+    <NavigationProperty Name="TCliente" Relationship="Self.FK__TBoleta__CodClie__2A4B4B5E" FromRole="TBoleta" ToRole="TCliente" />
+    <NavigationProperty Name="TVendedor" Relationship="Self.FK__TBoleta__CodVend__2B3F6F97" FromRole="TBoleta" ToRole="TVendedor" />
+    <NavigationProperty Name="TDetalle" Relationship="Self.FK__TDetalle__NroBol__30F848ED" FromRole="TBoleta" ToRole="TDetalle" />
+  </EntityType>
+  <EntityType Name="TCategoria">
+    <Key>
+      <PropertyRef Name="CodCategoria" />
+    </Key>
+    <Property Name="CodCategoria" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CategoriaPadre" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="TCategoria1" Relationship="Self.FK__TCategori__Categ__25869641" FromRole="TCategoria" ToRole="TCategoria1" />
+    <NavigationProperty Name="TCategoria2" Relationship="Self.FK__TCategori__Categ__25869641" FromRole="TCategoria1" ToRole="TCategoria" />
+    <NavigationProperty Name="TProducto" Relationship="Self.FK__TProducto__CodCa__2E1BDC42" FromRole="TCategoria" ToRole="TProducto" />
+  </EntityType>
+  <EntityType Name="TCliente">
+    <Key>
+      <PropertyRef Name="CodCliente" />
+    </Key>
+    <Property Name="CodCliente" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TBoleta" Relationship="Self.FK__TBoleta__CodClie__2A4B4B5E" FromRole="TCliente" ToRole="TBoleta" />
+  </EntityType>
+  <EntityType Name="TDetalle">
+    <Key>
+      <PropertyRef Name="NroBoleta" />
+      <PropertyRef Name="CodProducto" />
+    </Key>
+    <Property Name="NroBoleta" Type="Int32" Nullable="false" />
+    <Property Name="CodProducto" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" />
+    <Property Name="PrecioUnitario" Type="Decimal" Precision="4" Scale="2" />
+    <NavigationProperty Name="TBoleta" Relationship="Self.FK__TDetalle__NroBol__30F848ED" FromRole="TDetalle" ToRole="TBoleta" />
+    <NavigationProperty Name="TProducto" Relationship="Self.FK__TDetalle__CodPro__31EC6D26" FromRole="TDetalle" ToRole="TProducto" />
+  </EntityType>
+  <EntityType Name="TProducto">
+    <Key>
+      <PropertyRef Name="CodProduto" />
+    </Key>
+    <Property Name="CodProduto" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UnidadDeMedida" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Precio" Type="Decimal" Precision="4" Scale="2" />
+    <Property Name="Stock" Type="Int32" />
+    <Property Name="CodCategoria" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="TCategoria" Relationship="Self.FK__TProducto__CodCa__2E1BDC42" FromRole="TProducto" ToRole="TCategoria" />
+    <NavigationProperty Name="TDetalle" Relationship="Self.FK__TDetalle__CodPro__31EC6D26" FromRole="TProducto" ToRole="TDetalle" />
+  </EntityType>
+  <EntityType Name="TVendedor">
+    <Key>
+      <PropertyRef Name="CodVendedor" />
+    </Key>
+    <Property Name="CodVendedor" Type="String" MaxLength="5" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TBoleta" Relationship="Self.FK__TBoleta__CodVend__2B3F6F97" FromRole="TVendedor" ToRole="TBoleta" />
+  </EntityType>
+  <Association Name="FK__TBoleta__CodClie__2A4B4B5E">
+    <End Role="TCliente" Type="Self.TCliente" Multiplicity="0..1" />
+    <End Role="TBoleta" Type="Self.TBoleta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TCliente">
+        <PropertyRef Name="CodCliente" />
+      </Principal>
+      <Dependent Role="TBoleta">
+        <PropertyRef Name="CodCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TBoleta__CodVend__2B3F6F97">
+    <End Role="TVendedor" Type="Self.TVendedor" Multiplicity="0..1" />
+    <End Role="TBoleta" Type="Self.TBoleta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TVendedor">
+        <PropertyRef Name="CodVendedor" />
+      </Principal>
+      <Dependent Role="TBoleta">
+        <PropertyRef Name="CodVendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TDetalle__NroBol__30F848ED">
+    <End Role="TBoleta" Type="Self.TBoleta" Multiplicity="1" />
+    <End Role="TDetalle" Type="Self.TDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBoleta">
+        <PropertyRef Name="NroBoleta" />
+      </Principal>
+      <Dependent Role="TDetalle">
+        <PropertyRef Name="NroBoleta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TCategori__Categ__25869641">
+    <End Role="TCategoria" Type="Self.TCategoria" Multiplicity="0..1" />
+    <End Role="TCategoria1" Type="Self.TCategoria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TCategoria">
+        <PropertyRef Name="CodCategoria" />
+      </Principal>
+      <Dependent Role="TCategoria1">
+        <PropertyRef Name="CategoriaPadre" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TProducto__CodCa__2E1BDC42">
+    <End Role="TCategoria" Type="Self.TCategoria" Multiplicity="0..1" />
+    <End Role="TProducto" Type="Self.TProducto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TCategoria">
+        <PropertyRef Name="CodCategoria" />
+      </Principal>
+      <Dependent Role="TProducto">
+        <PropertyRef Name="CodCategoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TDetalle__CodPro__31EC6D26">
+    <End Role="TProducto" Type="Self.TProducto" Multiplicity="1" />
+    <End Role="TDetalle" Type="Self.TDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TProducto">
+        <PropertyRef Name="CodProduto" />
+      </Principal>
+      <Dependent Role="TDetalle">
+        <PropertyRef Name="CodProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BDVentasEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="TBoleta" EntityType="Self.TBoleta" />
+    <EntitySet Name="TCategoria" EntityType="Self.TCategoria" />
+    <EntitySet Name="TCliente" EntityType="Self.TCliente" />
+    <EntitySet Name="TDetalle" EntityType="Self.TDetalle" />
+    <EntitySet Name="TProducto" EntityType="Self.TProducto" />
+    <EntitySet Name="TVendedor" EntityType="Self.TVendedor" />
+    <AssociationSet Name="FK__TBoleta__CodClie__2A4B4B5E" Association="Self.FK__TBoleta__CodClie__2A4B4B5E">
+      <End Role="TCliente" EntitySet="TCliente" />
+      <End Role="TBoleta" EntitySet="TBoleta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TBoleta__CodVend__2B3F6F97" Association="Self.FK__TBoleta__CodVend__2B3F6F97">
+      <End Role="TVendedor" EntitySet="TVendedor" />
+      <End Role="TBoleta" EntitySet="TBoleta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TDetalle__NroBol__30F848ED" Association="Self.FK__TDetalle__NroBol__30F848ED">
+      <End Role="TBoleta" EntitySet="TBoleta" />
+      <End Role="TDetalle" EntitySet="TDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TCategori__Categ__25869641" Association="Self.FK__TCategori__Categ__25869641">
+      <End Role="TCategoria" EntitySet="TCategoria" />
+      <End Role="TCategoria1" EntitySet="TCategoria" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TProducto__CodCa__2E1BDC42" Association="Self.FK__TProducto__CodCa__2E1BDC42">
+      <End Role="TCategoria" EntitySet="TCategoria" />
+      <End Role="TProducto" EntitySet="TProducto" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TDetalle__CodPro__31EC6D26" Association="Self.FK__TDetalle__CodPro__31EC6D26">
+      <End Role="TProducto" EntitySet="TProducto" />
+      <End Role="TDetalle" EntitySet="TDetalle" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

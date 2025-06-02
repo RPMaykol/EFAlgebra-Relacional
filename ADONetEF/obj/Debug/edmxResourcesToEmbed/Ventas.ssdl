@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BDVentasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TBoleta">
+    <Key>
+      <PropertyRef Name="NroBoleta" />
+    </Key>
+    <Property Name="NroBoleta" Type="int" Nullable="false" />
+    <Property Name="Fecha" Type="date" />
+    <Property Name="CodCliente" Type="char" MaxLength="5" />
+    <Property Name="CodVendedor" Type="char" MaxLength="5" />
+    <Property Name="Anulado" Type="bit" />
+  </EntityType>
+  <EntityType Name="TCategoria">
+    <Key>
+      <PropertyRef Name="CodCategoria" />
+    </Key>
+    <Property Name="CodCategoria" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="CategoriaPadre" Type="char" MaxLength="5" />
+  </EntityType>
+  <EntityType Name="TCliente">
+    <Key>
+      <PropertyRef Name="CodCliente" />
+    </Key>
+    <Property Name="CodCliente" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="Apellidos" Type="varchar" MaxLength="50" />
+    <Property Name="Nombres" Type="varchar" MaxLength="50" />
+    <Property Name="Direccion" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TDetalle">
+    <Key>
+      <PropertyRef Name="NroBoleta" />
+      <PropertyRef Name="CodProducto" />
+    </Key>
+    <Property Name="NroBoleta" Type="int" Nullable="false" />
+    <Property Name="CodProducto" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="Cantidad" Type="int" />
+    <Property Name="PrecioUnitario" Type="decimal" Precision="4" Scale="2" />
+  </EntityType>
+  <EntityType Name="TProducto">
+    <Key>
+      <PropertyRef Name="CodProduto" />
+    </Key>
+    <Property Name="CodProduto" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="UnidadDeMedida" Type="varchar" MaxLength="50" />
+    <Property Name="Precio" Type="decimal" Precision="4" Scale="2" />
+    <Property Name="Stock" Type="int" />
+    <Property Name="CodCategoria" Type="char" MaxLength="5" />
+  </EntityType>
+  <EntityType Name="TVendedor">
+    <Key>
+      <PropertyRef Name="CodVendedor" />
+    </Key>
+    <Property Name="CodVendedor" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="Apellidos" Type="varchar" MaxLength="50" />
+    <Property Name="Nombres" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK__TBoleta__CodClie__2A4B4B5E">
+    <End Role="TCliente" Type="Self.TCliente" Multiplicity="0..1" />
+    <End Role="TBoleta" Type="Self.TBoleta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TCliente">
+        <PropertyRef Name="CodCliente" />
+      </Principal>
+      <Dependent Role="TBoleta">
+        <PropertyRef Name="CodCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TBoleta__CodVend__2B3F6F97">
+    <End Role="TVendedor" Type="Self.TVendedor" Multiplicity="0..1" />
+    <End Role="TBoleta" Type="Self.TBoleta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TVendedor">
+        <PropertyRef Name="CodVendedor" />
+      </Principal>
+      <Dependent Role="TBoleta">
+        <PropertyRef Name="CodVendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TCategori__Categ__25869641">
+    <End Role="TCategoria" Type="Self.TCategoria" Multiplicity="0..1" />
+    <End Role="TCategoria1" Type="Self.TCategoria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TCategoria">
+        <PropertyRef Name="CodCategoria" />
+      </Principal>
+      <Dependent Role="TCategoria1">
+        <PropertyRef Name="CategoriaPadre" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TDetalle__CodPro__31EC6D26">
+    <End Role="TProducto" Type="Self.TProducto" Multiplicity="1" />
+    <End Role="TDetalle" Type="Self.TDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TProducto">
+        <PropertyRef Name="CodProduto" />
+      </Principal>
+      <Dependent Role="TDetalle">
+        <PropertyRef Name="CodProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TDetalle__NroBol__30F848ED">
+    <End Role="TBoleta" Type="Self.TBoleta" Multiplicity="1" />
+    <End Role="TDetalle" Type="Self.TDetalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBoleta">
+        <PropertyRef Name="NroBoleta" />
+      </Principal>
+      <Dependent Role="TDetalle">
+        <PropertyRef Name="NroBoleta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TProducto__CodCa__2E1BDC42">
+    <End Role="TCategoria" Type="Self.TCategoria" Multiplicity="0..1" />
+    <End Role="TProducto" Type="Self.TProducto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TCategoria">
+        <PropertyRef Name="CodCategoria" />
+      </Principal>
+      <Dependent Role="TProducto">
+        <PropertyRef Name="CodCategoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BDVentasModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TBoleta" EntityType="Self.TBoleta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TCategoria" EntityType="Self.TCategoria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TCliente" EntityType="Self.TCliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TDetalle" EntityType="Self.TDetalle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TProducto" EntityType="Self.TProducto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TVendedor" EntityType="Self.TVendedor" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__TBoleta__CodClie__2A4B4B5E" Association="Self.FK__TBoleta__CodClie__2A4B4B5E">
+      <End Role="TCliente" EntitySet="TCliente" />
+      <End Role="TBoleta" EntitySet="TBoleta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TBoleta__CodVend__2B3F6F97" Association="Self.FK__TBoleta__CodVend__2B3F6F97">
+      <End Role="TVendedor" EntitySet="TVendedor" />
+      <End Role="TBoleta" EntitySet="TBoleta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TCategori__Categ__25869641" Association="Self.FK__TCategori__Categ__25869641">
+      <End Role="TCategoria" EntitySet="TCategoria" />
+      <End Role="TCategoria1" EntitySet="TCategoria" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TDetalle__CodPro__31EC6D26" Association="Self.FK__TDetalle__CodPro__31EC6D26">
+      <End Role="TProducto" EntitySet="TProducto" />
+      <End Role="TDetalle" EntitySet="TDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TDetalle__NroBol__30F848ED" Association="Self.FK__TDetalle__NroBol__30F848ED">
+      <End Role="TBoleta" EntitySet="TBoleta" />
+      <End Role="TDetalle" EntitySet="TDetalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TProducto__CodCa__2E1BDC42" Association="Self.FK__TProducto__CodCa__2E1BDC42">
+      <End Role="TCategoria" EntitySet="TCategoria" />
+      <End Role="TProducto" EntitySet="TProducto" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

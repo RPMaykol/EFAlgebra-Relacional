@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BDVentasModelStoreContainer" CdmEntityContainer="BDVentasEntities">
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="BDVentasModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TBoleta">
+      <EntityTypeMapping TypeName="BDVentasModel.TBoleta">
+        <MappingFragment StoreEntitySet="TBoleta">
+          <ScalarProperty Name="NroBoleta" ColumnName="NroBoleta" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="CodCliente" ColumnName="CodCliente" />
+          <ScalarProperty Name="CodVendedor" ColumnName="CodVendedor" />
+          <ScalarProperty Name="Anulado" ColumnName="Anulado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TCategoria">
+      <EntityTypeMapping TypeName="BDVentasModel.TCategoria">
+        <MappingFragment StoreEntitySet="TCategoria">
+          <ScalarProperty Name="CodCategoria" ColumnName="CodCategoria" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="CategoriaPadre" ColumnName="CategoriaPadre" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TCliente">
+      <EntityTypeMapping TypeName="BDVentasModel.TCliente">
+        <MappingFragment StoreEntitySet="TCliente">
+          <ScalarProperty Name="CodCliente" ColumnName="CodCliente" />
+          <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+          <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TDetalle">
+      <EntityTypeMapping TypeName="BDVentasModel.TDetalle">
+        <MappingFragment StoreEntitySet="TDetalle">
+          <ScalarProperty Name="NroBoleta" ColumnName="NroBoleta" />
+          <ScalarProperty Name="CodProducto" ColumnName="CodProducto" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TProducto">
+      <EntityTypeMapping TypeName="BDVentasModel.TProducto">
+        <MappingFragment StoreEntitySet="TProducto">
+          <ScalarProperty Name="CodProduto" ColumnName="CodProduto" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="UnidadDeMedida" ColumnName="UnidadDeMedida" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="Stock" ColumnName="Stock" />
+          <ScalarProperty Name="CodCategoria" ColumnName="CodCategoria" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TVendedor">
+      <EntityTypeMapping TypeName="BDVentasModel.TVendedor">
+        <MappingFragment StoreEntitySet="TVendedor">
+          <ScalarProperty Name="CodVendedor" ColumnName="CodVendedor" />
+          <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+          <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
